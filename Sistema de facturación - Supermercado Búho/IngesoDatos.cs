@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace Sistema_de_facturación___Supermercado_Búho
 {
-    public partial class Form2 : Form
+    public partial class frmIngesoDatos : Form
     {
-        public Form2()
+        public frmIngesoDatos(string txtContraseña)
         {
             InitializeComponent();
+        }
+
+        private void IngesoDatos_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Sistema_de_facturación___Supermercado_Búho
 {
-    partial class Form2
+    partial class frmIngesoDatos
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmIngesoDatos));
             this.txtTelefono = new System.Windows.Forms.TextBox();
             this.TxtDireccion = new System.Windows.Forms.TextBox();
             this.txtApellido = new System.Windows.Forms.TextBox();
@@ -38,9 +39,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -129,16 +130,6 @@
             this.label3.TabIndex = 29;
             this.label3.Text = "# De Identidad Del Cliente :";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::Sistema_de_facturación___Supermercado_Búho.Properties.Resources.logo;
-            this.pictureBox1.Location = new System.Drawing.Point(479, 9);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(81, 87);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 28;
-            this.pictureBox1.TabStop = false;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -159,12 +150,22 @@
             this.label1.TabIndex = 26;
             this.label1.Text = "Sistema De Facturación";
             // 
-            // Form2
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Sistema_de_facturación___Supermercado_Búho.Properties.Resources.logo;
+            this.pictureBox1.Location = new System.Drawing.Point(479, 9);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(81, 87);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 28;
+            this.pictureBox1.TabStop = false;
+            // 
+            // frmIngesoDatos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SlateGray;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(588, 450);
             this.Controls.Add(this.txtTelefono);
             this.Controls.Add(this.TxtDireccion);
             this.Controls.Add(this.txtApellido);
@@ -178,8 +179,11 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "Form2";
-            this.Text = "Form2";
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Name = "frmIngesoDatos";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Sistema De Facturación - Supermercado Búho";
+            this.Load += new System.EventHandler(this.IngesoDatos_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
