@@ -34,5 +34,10 @@ namespace Sistema_de_facturación___Supermercado_Búho
             controlBotones();
 
         }
+
+        private void btnIngresar_Click(object sender, EventArgs e)
+        {
+            
+        }
     }
 }
