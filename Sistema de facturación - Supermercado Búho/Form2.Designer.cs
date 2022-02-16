@@ -48,7 +48,7 @@
             // 
             // txtTelefono
             // 
-            this.txtTelefono.Location = new System.Drawing.Point(133, 234);
+            this.txtTelefono.Location = new System.Drawing.Point(231, 231);
             this.txtTelefono.Name = "txtTelefono";
             this.txtTelefono.Size = new System.Drawing.Size(188, 20);
             this.txtTelefono.TabIndex = 38;
@@ -56,7 +56,7 @@
             // 
             // TxtDireccion
             // 
-            this.TxtDireccion.Location = new System.Drawing.Point(108, 206);
+            this.TxtDireccion.Location = new System.Drawing.Point(231, 202);
             this.TxtDireccion.Name = "TxtDireccion";
             this.TxtDireccion.Size = new System.Drawing.Size(365, 20);
             this.TxtDireccion.TabIndex = 37;
@@ -64,7 +64,7 @@
             // 
             // txtApellido
             // 
-            this.txtApellido.Location = new System.Drawing.Point(162, 176);
+            this.txtApellido.Location = new System.Drawing.Point(231, 176);
             this.txtApellido.Name = "txtApellido";
             this.txtApellido.Size = new System.Drawing.Size(188, 20);
             this.txtApellido.TabIndex = 36;
@@ -72,7 +72,7 @@
             // 
             // txtNombre
             // 
-            this.txtNombre.Location = new System.Drawing.Point(162, 150);
+            this.txtNombre.Location = new System.Drawing.Point(231, 149);
             this.txtNombre.Name = "txtNombre";
             this.txtNombre.Size = new System.Drawing.Size(188, 20);
             this.txtNombre.TabIndex = 35;
@@ -80,7 +80,7 @@
             // 
             // txtIdentidad
             // 
-            this.txtIdentidad.Location = new System.Drawing.Point(196, 121);
+            this.txtIdentidad.Location = new System.Drawing.Point(231, 124);
             this.txtIdentidad.Name = "txtIdentidad";
             this.txtIdentidad.Size = new System.Drawing.Size(188, 20);
             this.txtIdentidad.TabIndex = 34;
@@ -102,9 +102,9 @@
             this.label6.Font = new System.Drawing.Font("Microsoft Tai Le", 8.25F, System.Drawing.FontStyle.Bold);
             this.label6.Location = new System.Drawing.Point(41, 234);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(86, 14);
+            this.label6.Size = new System.Drawing.Size(122, 14);
             this.label6.TabIndex = 32;
-            this.label6.Text = "# De Telefono :";
+            this.label6.Text = "Número De Telefono :";
             // 
             // label5
             // 
@@ -132,9 +132,10 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Tai Le", 8.25F, System.Drawing.FontStyle.Bold);
             this.label3.Location = new System.Drawing.Point(41, 124);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(149, 14);
+            this.label3.Size = new System.Drawing.Size(184, 14);
             this.label3.TabIndex = 29;
-            this.label3.Text = "# De Identidad Del Cliente :";
+            this.label3.Text = "Número de Identidad Del Cliente :";
+            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // pictureBox1
             // 
@@ -178,10 +179,10 @@
             // 
             // txaInformacion
             // 
-            this.txaInformacion.Location = new System.Drawing.Point(181, 272);
+            this.txaInformacion.Location = new System.Drawing.Point(231, 316);
             this.txaInformacion.Multiline = true;
             this.txaInformacion.Name = "txaInformacion";
-            this.txaInformacion.Size = new System.Drawing.Size(238, 97);
+            this.txaInformacion.Size = new System.Drawing.Size(238, 122);
             this.txaInformacion.TabIndex = 40;
             this.txaInformacion.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
