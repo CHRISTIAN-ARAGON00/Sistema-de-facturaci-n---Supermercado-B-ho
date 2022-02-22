@@ -10,21 +10,11 @@ using System.Windows.Forms;
 
 namespace Sistema_de_facturación___Supermercado_Búho
 {
-    public partial class Form4 : Form
+    public partial class Ventas : Form
     {
-        public Form4()
+        public Ventas()
         {
             InitializeComponent();
-        }
-
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

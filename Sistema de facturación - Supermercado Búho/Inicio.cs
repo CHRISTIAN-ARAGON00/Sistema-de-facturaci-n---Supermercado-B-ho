@@ -25,8 +25,7 @@ namespace Sistema_de_facturación___Supermercado_Búho
 
         private void btnIngresar_Click(object sender, EventArgs e)
         {
-
-            if (txtContraseña.Text != contra1)
+            if (txtContraseña.Text != contra1 && txtContraseña.Text != contra2)
             {
                 MessageBox.Show("CONTRASEÑA INCORRECTA");
                 txtContraseña.Clear();
@@ -34,24 +33,15 @@ namespace Sistema_de_facturación___Supermercado_Búho
             }
             else
             {
-         
-                frmIngesoDatos Form = new frmIngesoDatos();
+                this.Hide();
+                using (frmFecha Form = new frmFecha(txtContraseña.Text))
                 Form.ShowDialog();
-
             }
-            if (txtContraseña.Text != contra2)
-            {
-                MessageBox.Show("CONTRASEÑA INCORRECTA");
-                txtContraseña.Clear();
-                txtContraseña.Focus();
-            }
-            else
-            {
+        }
 
-                frmIngesoDatos Form = new frmIngesoDatos(txtContraseña.Text);
-                Form.ShowDialog();
-
-            }
+        private void btnSalir_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

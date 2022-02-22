@@ -10,21 +10,22 @@ using System.Windows.Forms;
 
 namespace Sistema_de_facturación___Supermercado_Búho
 {
-    public partial class Form3 : Form
+    public partial class factura : Form
     {
-        public Form3()
+
+        public factura(string i)
         {
             InitializeComponent();
+
+    
+            txtl.Text = ""+ i;
+
+        
+        
+        
         }
 
-        private void label3_Click(object sender, EventArgs e)
-        {
 
-        }
 
-        private void Form3_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

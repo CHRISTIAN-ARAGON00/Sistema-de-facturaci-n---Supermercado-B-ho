@@ -61,12 +61,102 @@ namespace Sistema_de_facturación___Supermercado_Búho.Properties {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a 2010
+        ///2011
+        ///2012
+        ///2013
+        ///2014
+        ///2015
+        ///2016
+        ///2017
+        ///2018
+        ///2019
+        ///2020
+        ///2021
+        ///2022
+        ///2023
+        ///2024
+        ///2025
+        ///2026
+        ///2027
+        ///2028
+        ///2029
+        ///2030
+        ///
+        ///.
+        /// </summary>
+        internal static string años {
+            get {
+                return ResourceManager.GetString("años", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a 1
+        ///2
+        ///3
+        ///4
+        ///5
+        ///6
+        ///7
+        ///8
+        ///9
+        ///10
+        ///11
+        ///12
+        ///13
+        ///14
+        ///15
+        ///16
+        ///17
+        ///18
+        ///19
+        ///20
+        ///21
+        ///22
+        ///23
+        ///24
+        ///25
+        ///26
+        ///27
+        ///28
+        ///29
+        ///30.
+        /// </summary>
+        internal static string DIAS {
+            get {
+                return ResourceManager.GetString("DIAS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap logo {
             get {
                 object obj = ResourceManager.GetObject("logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Enero
+        ///Febreo
+        ///Marzo
+        ///Abril
+        ///Mayo
+        ///Junio
+        ///Julio
+        ///Agosto
+        ///Septiembre
+        ///Octubre
+        ///Noviembre
+        ///Diciembre
+        ///.
+        /// </summary>
+        internal static string meses {
+            get {
+                return ResourceManager.GetString("meses", resourceCulture);
             }
         }
     }
