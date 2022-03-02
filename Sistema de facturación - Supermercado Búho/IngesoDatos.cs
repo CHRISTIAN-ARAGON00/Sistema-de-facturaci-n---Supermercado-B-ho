@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing.Printing;
 
 namespace Sistema_de_facturación___Supermercado_Búho
 {
@@ -16,23 +17,20 @@ namespace Sistema_de_facturación___Supermercado_Búho
         String selecCajero;
         string contra1 = "202020";
         string contra2 = "212121";
-        string d ;
-        string m ;
-        string a ;
+
         double precio = 0;
         double porcentaje = 0;
         double precioSinIva = 0;
+
 
         List<clsProducto> ListaProductos = new List<clsProducto>();
         List<clsDatosCliente> ListaClientes = new List<clsDatosCliente>();
 
 
-        public frmIngesoDatos(string fechaDia, string fechaMes, string fechaAño, string cajeroId, string cajeroNombre, string cajeroCi,string seleccionarCajero)
+        public frmIngesoDatos(string dia, string mes,string año, string cajeroId, string cajeroNombre, string cajeroCi,string seleccionarCajero)
         {
             InitializeComponent();
-            fechaDia = d;
-            fechaMes = m;
-            fechaAño = a;
+
 
             selecCajero = seleccionarCajero;
 
@@ -47,14 +45,16 @@ namespace Sistema_de_facturación___Supermercado_Búho
                 txtDatosCajero.Text = "Cajero:   "+ cajeroNombre + "\t\tCI:   "+ cajeroCi + "\t\t#id:   "+ cajeroId;
             }
             txtFecha.Text = "Fecha : ";
-
-            lblDia.Text = ""+fechaDia;
-            lblMes.Text = "" + fechaMes;
-            lblAño.Text = "" + fechaAño;
+            lblDia.Text = dia;
+            lblMes.Text = mes;
+            lblAño.Text = año;
 
             btnConsultar.Enabled = false;
   
             btnEliminarCliente.Enabled = false;
+
+
+
         }
 
         private void btnRegistrar_Click(object sender, EventArgs e)
@@ -87,7 +87,6 @@ namespace Sistema_de_facturación___Supermercado_Búho
             }
             erpError.SetError(txtCedula, "");
 
-
             //Creamos el objeto de la clase lista 
             clsDatosCliente clientes = new clsDatosCliente();   
             clientes.Nombre = txtNombre.Text;
@@ -105,6 +104,49 @@ namespace Sistema_de_facturación___Supermercado_Búho
             btnEliminarCliente.Enabled = true;
 
         }
+        //Valodar cantidad
+        private bool ValidarCantidad()
+        {
+            int c;
+            if (!int.TryParse(txtCantidad.Text,out c) || txtCantidad.Text == "")
+            {
+                erpError.SetError(txtCantidad, "Debe ingresar la cantidad de productos.");
+                txtCantidad.Clear();
+                txtCantidad.Focus();
+                return false;
+            }
+            else
+            {
+                if (txtCantidad.Text == "0")
+                {
+                    erpError.SetError(txtCantidad, "La cantidad de productos no puede ser 0");
+                    txtCantidad.Clear();
+                    txtCantidad.Focus();
+                    return false;
+                }
+                else {
+                    erpError.SetError(txtCantidad, "");
+                    return true;
+                }
+
+            }
+        }
+
+        //validar producto
+        private bool ValidarProducto()
+        {
+            if (string.IsNullOrEmpty(productos.Text))
+            {
+                erpError.SetError(productos, "Debe Seleccionar Un Producto.");
+                return false;
+            }
+            else
+            {
+                erpError.SetError(productos, "");
+                return true;
+            }
+        }
+
         //Validar que no ingresen Clientes con el mismo número de cedula
         private bool Existe(string Cedula)
         {
@@ -199,7 +241,26 @@ namespace Sistema_de_facturación___Supermercado_Búho
                 return true;
             }
         }
+        private bool Datas()
+        {
+            clsProducto producto = GetProducto(productos.Text);
+            if(producto == null){
 
+                MessageBox.Show("DEBE AGREGAR AL MENOS UN PRODUCTO");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        private clsProducto GetProducto(string text)
+        {
+            return ListaProductos.Find(produ => produ.Producto.Contains(productos.Text));
+
+
+        }
         private void LimpiarControles()
         {
             txtNombre.Clear();
@@ -207,6 +268,8 @@ namespace Sistema_de_facturación___Supermercado_Búho
             txtCedula.Clear();
             txtDireccion.Clear();
             txtTelefono.Clear();
+            txtCantidad.Clear();    
+
         }
         //Evento de la opción consultar
         private void btnConsultar_Click(object sender, EventArgs e)
@@ -284,48 +347,69 @@ namespace Sistema_de_facturación___Supermercado_Búho
             frmInicio Form = new frmInicio();
             Form.ShowDialog();
         }
-        private void btnAgregarProducto_Click(object sender, EventArgs e)
-        {
-            clsProducto producto = new clsProducto();
-            producto.Nombre = productos.SelectedItem.ToString();
-            producto.Cantidad = txtCantidad.Text;
-            producto.PrecioSinIva = lblPrecioSinIva.Text;
-            producto.PrecioFinal = lblPrecioFinal.Text;
-            ListaProductos.Add(producto);
 
-            if (productos.SelectedIndex == -1)
+
+
+
+
+        private void btnMostrarFactura_Click(object sender, EventArgs e)
+        {
+            if (ValidarCedula() == false)
             {
-                MessageBox.Show("Debe selccionar un producto !!!");
+                return;
+            }
+            else { 
+            if (ValidarNombre() == false)
+            {
+                return;
+            }else
+                {
+                    if (ValidarApellido() == false)
+            {
+                return;
+            }else
+                    {
+                        if (ValidarDirección() == false)
+            {
+                return;
             }
             else
+                        {
+                            if (ValidarTelefono() == false)
             {
-                if (txtCantidad.Text == "")
-                {
-                    MessageBox.Show("Debe ingresar una cantidad !!!");
+                return;
+                            }
+                            else
+                            {
+                                if (Datas() == false)
+                                {
+                                    return ;
+                                } else { 
+
+                                printDocument1 = new PrintDocument();
+                                PrinterSettings ps = new PrinterSettings();
+                                printDocument1.PrinterSettings = ps;
+                                printDocument1.PrintPage += Imprimir;
+                                printDocument1.Print();
+
+                                }
+                            }
+                        }
+                    }
                 }
-                else
-                {
-                    string product = productos.Text;
-                    int Cantidad = Convert.ToInt32(txtCantidad.Text);
-
-                    double pSinIva = Cantidad * precioSinIva;
-
-                    double pFinal = Cantidad * precio;
-
-                    ListViewItem fila = new ListViewItem(product);
-                    fila.SubItems.Add(Cantidad.ToString());
-                    fila.SubItems.Add(pSinIva.ToString());
-                    fila.SubItems.Add(pFinal.ToString());
-
-                    listaSeleccionados.Items.Add(fila);
-
-                }
-
             }
+
         }
-        private void listaSeleccionados_SelectedIndexChanged(object sender, EventArgs e)
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
         {
-            lblPrecioFinal.Text = (0).ToString("C");
+            LimpiarControles();
+            productos.SelectedIndex = -1;
+            lblTotalAPagar.Text = "";
+            dgvProductos.DataSource = null;
+            txtEfectvo.Text = "";
+
+
         }
 
         private void productos_SelectedIndexChanged(object sender, EventArgs e)
@@ -375,23 +459,251 @@ namespace Sistema_de_facturación___Supermercado_Búho
             }
             if (producto.Equals("Pilas"))
             {
-                precio = 0.75;
+                precio = 1.50;
                 porcentaje = precio * 0.12;
                 precioSinIva = precio - porcentaje;
+
             }
-            lblPrecioFinal.Text = precio.ToString();
-            lblPrecioSinIva.Text = precioSinIva.ToString();
+
+            txtPrecioFinal.Text = precio.ToString("c");
+            txtPrecioSinIva.Text = precioSinIva.ToString("c");
         }
-        private void btnMostrarFactura_Click(object sender, EventArgs e)
+
+        private void btnAgregarProducto_Click(object sender, EventArgs e)
         {
-            int i = 0;
-            i++;
+            if (ValidarProducto() == false)
+            {
+                return;
+            }
+            else
+            {
+                if (ValidarCantidad() == false)
+                {
+                    return;
+                }
+                else
+                {
+                    double precio = 0;
+                    double porcentaje = 0;
+                    double precioSinIva = 0;
+
+                    string producto = productos.Text;
+                    if (producto.Equals("Leche"))
+                    {
+                        precio = 0.75;
+                        porcentaje = precio * 0.12;
+                        precioSinIva = precio - porcentaje;
+                    }
+                    if (producto.Equals("Pan"))
+                    {
+                        precio = 0.15;
+                        porcentaje = precio * 0.12;
+                        precioSinIva = precio - porcentaje;
+                    }
+                    if (producto.Equals("Queso"))
+                    {
+                        precio = 2.00;
+                        porcentaje = precio * 0.12;
+                        precioSinIva = precio - porcentaje;
+                    }
+                    if (producto.Equals("Huevos"))
+                    {
+                        precio = 0.15;
+                        porcentaje = precio * 0.12;
+                        precioSinIva = precio - porcentaje;
+                    }
+                    if (producto.Equals("Shampoo"))
+                    {
+                        precio = 10.00;
+                        porcentaje = precio * 0.12;
+                        precioSinIva = precio - porcentaje;
+                    }
+                    if (producto.Equals("Jabón"))
+                    {
+                        precio = 3;
+                        porcentaje = precio * 0.12;
+                        precioSinIva = precio - porcentaje;
+                    }
+                    if (producto.Equals("Detergente"))
+                    {
+                        precio = 0.75;
+                        porcentaje = precio * 0.12;
+                        precioSinIva = precio - porcentaje;
+                    }
+                    if (producto.Equals("Pilas"))
+                    {
+                        precio = 1.50;
+                        porcentaje = precio * 0.12;
+                        precioSinIva = precio - porcentaje;
+
+                    }
+
+                    txtPrecioFinal.Text = precio.ToString("c");
+                    txtPrecioSinIva.Text = precioSinIva.ToString("c");
+
+                    int c = Convert.ToInt32(txtCantidad.Text);
+                    double preS = c * precioSinIva;
+                    double pref = c * precio;
+
+                    txtPrecioS.Text = preS.ToString("c");
+                    txtPrecioF.Text = pref.ToString("c");
+
+                    //Creamos el objeto de la clase lista 
+                    clsProducto produ = new clsProducto();
+                    produ.Producto = productos.Text;
+                    produ.Cantidad = txtCantidad.Text;
+                    produ.PrecioSinIva = preS;
+                    produ.PrecioFinal = pref ;
+                    ListaProductos.Add(produ);
+                    dgvProductos.DataSource = null;
+                    dgvProductos.DataSource = ListaProductos;
+
+                    productos.SelectedIndex = -1;
+                    txtCantidad.Text = ""; 
+
+                    TotalAPagar();
+                    TotalAPagarS();
 
 
-            this.Hide();
-            factura Form = new factura(i.ToString());
-            Form.ShowDialog();
+
+            }
+        }
+        }
+        private void TotalAPagarS()
+        {
+            double TotalVenta = 0;
+            foreach (DataGridViewRow row in dgvProductos.Rows)
+            {
+                TotalVenta += Convert.ToDouble(row.Cells["PrecioSinIva"].Value.ToString());
+
+            }
+
+            lblSubtotal.Text = TotalVenta.ToString();
+        }
+        private void TotalAPagar()
+        {
+            double TotalVenta = 0;
+            foreach (DataGridViewRow row in dgvProductos.Rows)
+            {
+                TotalVenta += Convert.ToDouble(row.Cells["PrecioFinal"].Value.ToString());
+
+            }
+
+            lblTotalAPagar.Text = TotalVenta.ToString();
+        }
+
+        private void txtEfectvo_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                lblCambio.Text = (double.Parse(txtEfectvo.Text) - double.Parse(lblTotalAPagar.Text)).ToString();
+
+
+            }
+            catch 
+            {
+
+                lblCambio.Text = "0.00";
+            }
+
+        }
+
+        private void Imprimir(object sender,PrintPageEventArgs e)
+        {
+            Font font = new Font("Arial", 14);
+            Font f = new Font("Arial", 8);
+            Font fo = new Font("Arial", 10);
+            int ancho = 900;
+            int y = 20;
+
+            e.Graphics.DrawString("- - - - - - - -Super Mercado Búho - - - - - - - -",font,Brushes.Black ,new RectangleF(0,y+=20,ancho,20));
+            e.Graphics.DrawString("***Datos Cliente***", font, Brushes.Black, new RectangleF(50, y += 40, ancho, 20));
+            e.Graphics.DrawString("Nombre:  "+txtNombre.Text+"   "+txtApellido.Text, font, Brushes.Black, new RectangleF(0, y += 30, ancho, 20));
+            e.Graphics.DrawString("#Cedula:  "+txtCedula.Text, font, Brushes.Black, new RectangleF(0, y += 20, ancho, 20));
+            e.Graphics.DrawString("Dirección:  "+txtDireccion.Text, font, Brushes.Black, new RectangleF(0, y += 20, ancho, 20));
+            e.Graphics.DrawString("Telefono:  "+txtTelefono.Text, font, Brushes.Black, new RectangleF(0, y += 20, ancho, 20));
+            e.Graphics.DrawString("***Productos***", font, Brushes.Black, new RectangleF(50, y += 40, ancho, 20));
+            e.Graphics.DrawString("PRODUCTO               CANT       P.SINIVA       P.FINAL", f, Brushes.Black, new RectangleF(0, y += 30, ancho, 20));
+
+            foreach (DataGridViewRow row in dgvProductos.Rows)
+            {
+                if (row.Cells["Producto"].Value.ToString() == "Leche")
+                {
+                    e.Graphics.DrawString(row.Cells["Producto"].Value.ToString() + "               " +
+                    row.Cells["Cantidad"].Value.ToString() + "       " +
+                    row.Cells["PrecioSinIva"].Value.ToString() + "       " + "$" +
+                     row.Cells["PrecioFinal"].Value.ToString(),
+
+                    font, Brushes.Black, new RectangleF(0, y += 30, ancho, 20));
+                }
+                if (row.Cells["Producto"].Value.ToString() == "Pan")
+                {
+                    e.Graphics.DrawString(row.Cells["Producto"].Value.ToString() + "                 " +
+                    row.Cells["Cantidad"].Value.ToString() + "       " +
+                    row.Cells["PrecioSinIva"].Value.ToString() + "       " + "$" +
+                     row.Cells["PrecioFinal"].Value.ToString(),
+
+                    font, Brushes.Black, new RectangleF(0, y += 30, ancho, 20));
+                }
+                if (row.Cells["Producto"].Value.ToString() == "Queso")
+                {
+                    e.Graphics.DrawString(row.Cells["Producto"].Value.ToString() + "            " +
+                    row.Cells["Cantidad"].Value.ToString() + "       " +
+                    row.Cells["PrecioSinIva"].Value.ToString() + "       " + "$" +
+                     row.Cells["PrecioFinal"].Value.ToString(),
+
+                    font, Brushes.Black, new RectangleF(0, y += 30, ancho, 20));
+                }
+                if (row.Cells["Producto"].Value.ToString() == "Shampoo")
+                {
+                    e.Graphics.DrawString(row.Cells["Producto"].Value.ToString() + "          " +
+                    row.Cells["Cantidad"].Value.ToString() + "       " +
+                    row.Cells["PrecioSinIva"].Value.ToString() + "       " + "$" +
+                     row.Cells["PrecioFinal"].Value.ToString(),
+
+                    font, Brushes.Black, new RectangleF(0, y += 30, ancho, 20));
+                }
+                if (row.Cells["Producto"].Value.ToString() == "Jabón")
+                {
+                    e.Graphics.DrawString(row.Cells["Producto"].Value.ToString() + "              " +
+                    row.Cells["Cantidad"].Value.ToString() + "       " +
+                    row.Cells["PrecioSinIva"].Value.ToString() + "       " + "$" +
+                     row.Cells["PrecioFinal"].Value.ToString(),
+
+                    font, Brushes.Black, new RectangleF(0, y += 30, ancho, 20));
+                }
+                if (row.Cells["Producto"].Value.ToString() == "Detergente")
+                {
+                    e.Graphics.DrawString(row.Cells["Producto"].Value.ToString() + "       " +
+                    row.Cells["Cantidad"].Value.ToString() + "       " +
+                    row.Cells["PrecioSinIva"].Value.ToString() + "       " + "$" +
+                     row.Cells["PrecioFinal"].Value.ToString(),
+
+                    font, Brushes.Black, new RectangleF(0, y += 30, ancho, 20));
+                }
+                if (row.Cells["Producto"].Value.ToString() == "Huevos")
+                {
+                    e.Graphics.DrawString(row.Cells["Producto"].Value.ToString() + "           " +
+                    row.Cells["Cantidad"].Value.ToString() + "       " +
+                    row.Cells["PrecioSinIva"].Value.ToString() + "       " + "$" +
+                     row.Cells["PrecioFinal"].Value.ToString(),
+
+                    font, Brushes.Black, new RectangleF(0, y += 30, ancho, 20));
+                }
+
+            }
+            e.Graphics.DrawString("-------------------------------------------------" , font, Brushes.Black, new RectangleF(0, y += 20, ancho, 20));
+                                
+            e.Graphics.DrawString("Subtotal:  "+lblSubtotal.Text, font, Brushes.Black, new RectangleF(0, y += 30, ancho, 20));
+            e.Graphics.DrawString("Total a Pagar :  " + lblTotalAPagar.Text, font, Brushes.Black, new RectangleF(0, y += 30, ancho, 20));
+            e.Graphics.DrawString("-------------------------------------------------", font, Brushes.Black, new RectangleF(0, y += 30, ancho, 20));
+            e.Graphics.DrawString(""+txtDatosCajero.Text, f, Brushes.Black, new RectangleF(0, y += 20, ancho, 20));
+            e.Graphics.DrawString("***GRACIAS POR SU COMPRA***", fo, Brushes.Black, new RectangleF(50, y += 30, ancho, 20));
+            e.Graphics.DrawString("***VUELVA PRONTO***", fo, Brushes.Black, new RectangleF(60, y += 30, ancho, 20));
+
+
         }
     }
+
 
 }
