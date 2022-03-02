@@ -10,21 +10,20 @@ using System.Windows.Forms;
 
 namespace Sistema_de_facturación___Supermercado_Búho
 {
-    public partial class frmFecha : Form
+    public partial class formFecha : Form
     {
         String seleccionarCajero;
         string contra1 = "202020";
         string contra2 = "212121";
 
-        string[]dias;
-        string[]meses;
-        string[]años;
+        string[] dias;
+        string[] meses;
+        string[] años;
 
 
         List<clsFecha> Listafecha = new List<clsFecha>();
         List<clsCajero> ListaCajero = new List<clsCajero>();
-
-        public frmFecha(string txtContraseña)
+        public formFecha(string txtContraseña)
         {
             InitializeComponent();
 
@@ -41,42 +40,13 @@ namespace Sistema_de_facturación___Supermercado_Búho
             }
 
             string listado_dia = Properties.Resources.DIAS.ToString();
-            dias = listado_dia.Split(new[] {"\r\n" },StringSplitOptions.RemoveEmptyEntries);
+            dias = listado_dia.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             string listado_mes = Properties.Resources.meses.ToString();
             meses = listado_mes.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             string listado_año = Properties.Resources.años.ToString();
             años = listado_año.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-       
-        
-        
-        }
 
 
-        private void Fecha_Load(object sender, EventArgs e)
-        {
-            popularDia();
-            popularMes();
-            popularAño();
-
-        void popularDia()
-            {
-                for(int i = 0; i< dias.Length;i++ ){
-                    dia.Items.Add(dias[i]);
-                }
-            }
-            void popularMes()
-            {
-                for(int i = 0; i< meses.Length;i++ ){
-                    mes.Items.Add(meses[i]);
-                }
-            }
-            void popularAño()
-            {
-                for (int i = 0; i < años.Length; i++)
-                {
-                    año.Items.Add(años[i]);
-                }
-            }
 
         }
 
@@ -87,12 +57,12 @@ namespace Sistema_de_facturación___Supermercado_Búho
         private void btnSalir_Click(object sender, EventArgs e)
         {
             this.Hide();
-            frmInicio Form = new frmInicio() ;
-            Form.ShowDialog();  
-            
+            frmInicio Form = new frmInicio();
+            Form.ShowDialog();
+
         }
 
-        private void btnComenzar_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             if (dia.SelectedItem != null && mes.SelectedItem != null && año.SelectedItem != null)
             {
@@ -136,6 +106,35 @@ namespace Sistema_de_facturación___Supermercado_Búho
             else
             {
                 MessageBox.Show("DEBE LLENAR TODOS LOS CAMPOS");
+            }
+        }
+
+        private void formFecha_Load(object sender, EventArgs e)
+        {
+            popularDia();
+            popularMes();
+            popularAño();
+
+            void popularDia()
+            {
+                for (int i = 0; i < dias.Length; i++)
+                {
+                    dia.Items.Add(dias[i]);
+                }
+            }
+            void popularMes()
+            {
+                for (int i = 0; i < meses.Length; i++)
+                {
+                    mes.Items.Add(meses[i]);
+                }
+            }
+            void popularAño()
+            {
+                for (int i = 0; i < años.Length; i++)
+                {
+                    año.Items.Add(años[i]);
+                }
             }
         }
     }

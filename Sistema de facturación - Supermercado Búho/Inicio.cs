@@ -34,7 +34,7 @@ namespace Sistema_de_facturación___Supermercado_Búho
             else
             {
                 this.Hide();
-                using (frmFecha Form = new frmFecha(txtContraseña.Text))
+                using (formFecha Form = new formFecha (txtContraseña.Text))
                 Form.ShowDialog();
             }
         }

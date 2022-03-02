@@ -8,9 +8,9 @@ namespace Sistema_de_facturación___Supermercado_Búho
 {
     internal class clsProducto
     {
-        public string Nombre { get; set; }
+        public string Producto { get; set; }
         public string Cantidad { get; set; }
-        public string PrecioSinIva { get; set; }
-        public string PrecioFinal { get; set; }
+        public double PrecioSinIva { get; set; }
+        public double PrecioFinal { get; set; }
     }
 }
